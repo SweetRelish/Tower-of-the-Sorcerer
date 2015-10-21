@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	CSE 154, Homework 8: Fifteen Puzzle
+	You should not modify fifteen.html.  Your JS code should work with an
+	unmodified version of this file.
+	-->
+
+	<head>
+		<title>Tower of the Sorcerer</title>
+		<meta charset="utf-8"/>
+		<link href="https://webster.cs.washington.edu/images/fifteen/fifteen.gif" type="image/gif" rel="shortcut icon" />
+
+		<!-- your files that you will write -->
+		<link href="mota.css" type="text/css" rel="stylesheet" />
+		<script src="mota.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<h1>CSE 543 Tower of the Sorcerer</h1>
+
+		<p>
+			You are about to enter and discover Tower of the Sorcerer in which there is said to be a princess imprisoned inside...
+		</p>
+
+		<div id="gamearea">
+			<div id="announcement">
+				<p>Announcement:</p>
+				<ul>
+					<li>Use arrow keys to control your character</li>
+					<li>Right now attack stat is set to 100 and the amount of yellow keys is set to 100 for test purposes</li>
+					<li>Refresh the page or do similar things will reset the game</li>
+					<li>Responsive web design not used, which means using mobile to visit this website may cause a lot of problems</li>
+				</ul>
+			</div>
+			<div id="leftpanel">
+				<div id="leftpanel_infoarea">
+					<div id="leftpanel_floornumber">1F</div>
+					
+					<div id="leftpanel_status">
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/status_hp.png" alt="hp" />
+							<div id="status_hp" class="status_stats">1000</div>
+						</div>
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/status_attack.png" alt="attack" />
+							<div id="status_attack" class="status_stats">10</div>
+						</div>
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/status_defense.png" alt="defense" />
+							<div id="status_defense" class="status_stats">10</div>
+						</div>
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/status_gold.png" alt="gold" />
+							<div id="status_gold" class="status_stats">0</div>
+						</div>
+					</div>
+					
+					<div id="leftpanel_keys">
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/yellowKey.png" alt="yellowKey" /> x
+							<div id="yellowkeys_amount">0</div>
+						</div>
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/blueKey.png" alt="blueKey" /> x
+							<div id="bluekeys_amount">0</div>
+						</div>
+						<div>
+							<img src="http://www.andrew-yq.com/shift90/lab42/icon/redKey.png" alt="redKey" /> x  
+							<div id="redkeys_amount">0</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="mainzone">
+				<div id="oldhead">
+					<div id="oldhead_intro">
+						<div id="oldhead_icon">
+							<div class="monster_img">
+								<img src="http://www.andrew-yq.com/shift90/lab42/icon/oldHead.png" alt="oldHead" />
+							</div>
+						</div>
+						<div id="oldhead_name">the sage</div>
+					</div>
+					<div id="oldhead_words">
+						
+					</div>
+					<div id="oldhead_choice">
+						<div class="choice_yes">(y) thanks</div>
+					</div>
+				</div>
+				<div id="merchant">
+					<div id="merchant_intro">
+						<div id="merchant_icon">
+							<div class="monster_img">
+								<img src="http://www.andrew-yq.com/shift90/lab42/icon/merchant.png" alt="merchant" />
+							</div>
+						</div>
+						<div id="oldhead_name">the merchant</div>
+					</div>
+					<div id="merchant_words"></div>
+					<div id="merchant_choice">
+						<div class="choice_yes">(y) deal</div>
+						<div class="choice_no">(n) no thanks</div>
+					</div>
+				</div>
+				<div id="store">
+					<div id="store_intro">
+						<div id="store_name">God of Greed</div>
+						<div id="store_icon">
+							<div class="monster_img">
+								<img src="http://www.andrew-yq.com/shift90/lab42/icon/storeMiddle.png" alt="store"/>
+							</div>
+						</div>
+						<div id="store_ask"></div>
+					</div>
+					<div id="store_choice">
+						<div id="choice_num">
+							<div class="each_choice_num">(1)</div>
+							<div class="each_choice_num">(2)</div>
+							<div class="each_choice_num">(3)</div>
+							<div class="each_choice_num">(n)</div>
+						</div>
+						<div id="store_menu">
+							<div class="each_store_menu" id="increase_hp"></div>
+							<div class="each_store_menu" id="increase_atk"></div>
+							<div class="each_store_menu" id="increase_def"></div>
+							<div class="each_store_menu">no thanks</div>
+						</div>
+					</div>
+				</div>
+				<div id="monsterdex1"></div>
+				<div id="monsterdex2"></div>
+			</div>
+			
+			<div id="rightpanel">
+				<div id="rightpanel_infoarea">
+					<div id="rightpanel_armors">
+						<div id="armors_weapon">
+							<div>
+								sword
+								<div id="weapon_name">none</div>				
+							</div>
+							<div id="weapon_img"></div>
+						</div>
+						<div id="armors_shield">
+							<div>
+								shield
+								<div id="shield_name">none</div>
+							</div>
+							<div id="shield_img"></div>
+						</div>
+					</div>				
+					<div id="rightpanel_items"></div>				
+				</div>
+			</div>
+			
+		</div>
+
+		<p id="controls">
+			<label id="enablebgm"><input type="checkbox" checked="checked"/>enable background music</label>	
+		</p>
+		<audio id="bgm" autoplay loop>
+			<source src="music/bgm1.mp3" type="audio/mpeg">
+		</audio>
+
+		<div id="output"></div>
+
+		<p>
+			American puzzle author and mathematician Sam Loyd is often falsely credited with creating the puzzle; indeed, Loyd claimed from 1891 until his death in 1911 that he invented it. The puzzle was actually created around 1874 by Noyes Palmer Chapman, a postmaster
+			in Canastota, New York.
+		</p>
+
+		<div id="w3c">
+			<a href="https://webster.cs.washington.edu/validate-html.php">
+			<img src="https://webster.cs.washington.edu/images/w3c-html.png" alt="Valid HTML" /></a>
+			<a href="https://webster.cs.washington.edu/validate-css.php">
+			<img src="https://webster.cs.washington.edu/images/w3c-css.png" alt="Valid CSS" /></a>
+			<a href="https://webster.cs.washington.edu/jslint/?referer">
+			<img src="https://webster.cs.washington.edu/images/w3c-js.png" alt="Valid JS" /></a>
+		</div>
+	</body>
+
+</html>
