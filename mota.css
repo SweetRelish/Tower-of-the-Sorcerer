@@ -1,0 +1,757 @@
+body {
+	font-family: cursive;
+	text-align: center;
+}
+
+.tile {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	font-size: 10pt;
+	color: white;
+}
+
+.invisibletile {
+	position: absolute;
+	font-size: 10pt;
+	color: white;
+}
+
+.zone {
+	position: relative;
+	width: 416px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#leftpanel,
+#mainzone,
+#rightpanel {
+	color: white;
+	display: inline-block;
+	height: 416px;
+	border-radius: 3px;
+	box-shadow: 6px 6px black;
+	vertical-align: top;
+}
+
+#leftpanel,
+#rightpanel {
+	width: 120px;
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueWall.png);
+}
+
+#leftpanel_infoarea {
+	width: 100px;
+}
+
+#leftpanel_floornumber {
+	background-color: gray;
+	width: inherit;
+	height: 20px;
+	padding-bottom: 5px;
+	font-size: 14pt;
+}
+
+#leftpanel_status {
+	width: inherit;
+	height: 96px;
+	margin-top: 14px;
+	margin-bottom: 20px;
+}
+
+#leftpanel_floornumber,
+.status_stats,
+#leftpanel_keys,
+#rightpanel_items,
+#armors_weapon, 
+#armors_shield,
+#weapon_name, 
+#shield_name {
+	box-shadow: -2px -2px black;
+}
+
+#leftpanel_status div img {
+	-webkit-filter: drop-shadow(-1px -1px black);
+	vertical-align: top;
+}
+
+.status_stats {
+	background-color: gray;
+	width: 75px;
+	height: 20px;
+	display: inline-block;
+	margin-left: 1.2px;
+	margin-bottom: 5px;
+	padding-bottom: 1px;
+}
+
+
+#leftpanel_keys {
+	background-color: gray;
+	width: inherit;
+	height: 150px;
+}
+
+#leftpanel_keys > div {
+	padding: 8px;
+	text-align: left;
+	height: 32px;
+	width: inherit;
+}
+#leftpanel_keys div img {
+	-webkit-filter: drop-shadow(-1px -1px black);
+	vertical-align: middle;
+}
+
+#leftpanel_keys div div {
+	text-align: center;
+	margin-bottom: 2px;
+	width: 36px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 18pt;
+}
+
+#leftpanel_infoarea, #rightpanel_infoarea {
+	margin-top: 53px;
+	height: 310px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#rightpanel_infoarea {
+	width: 108px;
+}
+
+#rightpanel_armors {
+	width: inherit;
+	height: 88px;
+	margin-bottom: 12px;
+}
+
+#armors_weapon, #armors_shield {
+	background-color: #666666;
+	width: inherit;
+	height: 40px;
+	text-align: left;
+
+}
+
+#armors_weapon {
+	margin-bottom: 8px;
+}
+
+#armors_weapon > div:nth-child(1), 
+#armors_shield > div:nth-child(1) {
+	font-size: 14px;
+	width: 64px;
+	height: inherit;
+	line-height: 14px;	
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+
+}
+
+#weapon_name, #shield_name {
+	font-size: 14pt;
+	background-color: gray;
+	width: 62px;
+	height: 20px;
+	margin-top: 3px;
+	margin-left: 2px;
+	line-height: 17px;
+}
+
+#weapon_img, #shield_img {
+	width: 35px;
+	height: 32px;
+	display: inline-block;
+	margin-top: 4px;
+}
+
+#weapon_img img， #shield_img img {
+	-webkit-filter: drop-shadow(-1px -1px black);
+}
+
+#rightpanel_items {
+	background-color: rgb(102,102,102);
+	width: inherit;
+	height: 210px;
+	text-align: left; 
+}
+
+#rightpanel_items img {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+#monsterdex1, #monsterdex2 {
+	background-color: rgb(76,76,76);
+	position: absolute;
+	width: 352px;
+	height: 352px;
+	z-index: 1;
+	margin-left: 32px;
+	margin-top: 32px;
+}
+
+.eachmonster {
+	position: relative;
+
+	margin-left: 10px;
+	margin-right: auto;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	width: 250px;
+	height: 50px;
+	font-size: 10pt;
+}
+
+.eachmonster div {
+	position: absolute;
+}
+
+.monster_img {
+	border: 4px solid rgb(0,153,204);
+	width: 42px;
+	height: 42px;
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/road.png);
+}
+
+.monster_img img {
+	padding: 5px;
+}
+
+.monster_name, .monster_dmg {
+	width: 125px;
+	height: 25px;
+	line-height: 22px;
+}
+.monster_name {	
+	left: 50px;
+	
+}
+
+.monster_dmg {
+	color: red;
+	left: 170px;
+	font-weight: bold;
+	font-size: 12pt;
+	text-align: left;
+	padding-left: 5px;
+}
+
+.monster_hp, .monster_atk, 
+.monster_def, .monster_gold {
+	top: 25px;
+	width: 65px;
+	height: 25px;
+	color: white;
+	text-align: left;
+	padding-left: 6px;
+	line-height: 22px;
+}
+
+.monster_hp {
+	left: 50px;
+}
+.monster_atk {
+	left: 115px;
+}
+.monster_def {
+	left: 180px;
+}
+.monster_gold {
+	left: 245px;
+}
+
+#store, #oldhead, #merchant {
+	position: absolute;
+	font-weight: bold;
+	color: white;
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/road.png);
+	width: 288px;
+	height: 288px;
+	margin-left: 64px;
+	margin-top: 64px;
+	border: 3px solid rgb(0,153,204);	
+}
+
+#oldhead {
+	z-index: -3;
+}
+
+#merchant {
+	z-index: -3;
+}
+
+#store_intro {
+	height: 120px;
+	width: inherit;
+	position: relative;
+}
+
+#store_name {
+	position: absolute;
+	width: inherit;
+	height: 38px;
+	font-size:19pt;
+}
+
+#store_icon {
+	position: absolute;
+	width: 50px;
+	height: 82px;
+	margin-left: 5px;
+	margin-top: 50px;	
+}
+
+#store_ask {
+	position: absolute;
+	width: 223px;
+	height: 72px;
+	margin-top: 38px;
+	margin-left: 55px;
+	padding: 5px;
+}
+
+#store_choice {
+	position: relative;
+	border-top: 4px solid rgb(0,153,204);
+}
+
+#choice_num {
+	position: absolute;
+	width: 40px;
+	height: 164px;
+}
+
+#store_menu {
+	position: absolute;
+	margin-left: 40px;
+	width: 248px;
+	height: 164px;	
+}
+
+.each_store_menu {
+	width: 248px;
+	height: 41px;
+	font-size: 12pt;
+	line-height: 38px;
+
+}
+
+.each_choice_num {
+	width: inherit;
+	height: 41px;
+	line-height: 38px;
+	
+}
+
+#oldhead_intro, #merchant_intro {
+	height: 60px;
+	width: inherit;
+}
+
+#oldhead_icon, #merchant_icon {
+	width: 60px;
+	height: inherit;
+	display: inline-block;
+}
+
+#merchant_icon div, #oldhead_icon div {
+	margin: 5px;
+}
+
+#oldhead_name, #merchant_name {
+	display: inline-block;
+	height: inherit;
+	width: 221px;
+	vertical-align: top;
+	font-size: 22pt;
+	line-height: 55px;
+	
+}
+
+#oldhead_words, #merchant_words {
+	font-weight: normal;
+	width: 258px;
+	height: 194px;
+	text-align: left;
+	padding: 15px;
+	border-top: 4px solid rgb(0,153,204);
+}
+
+#merchant_choice, #oldhead_choice {
+	text-align: left;
+	width: 234px;
+	height: 30px;
+	position: absolute;
+	right: 0px;
+	bottom: 15px;
+	
+	
+}
+
+.choice_yes, .choice_no {
+	text-align: left;
+	border: 2px solid rgb(0,153,204);
+	padding-left: 5px;
+	line-height: 30px;
+	font-size: 10pt;
+	margin-right: 9px;
+	width: 95px;
+	height: 30px;
+	display: inline-block;
+	vertical-align: top;
+	
+}
+
+#oldhead_choice {
+	text-align: right;
+}
+
+#announcement {
+	width: 300px;
+	height: 416px;
+	position: absolute;
+	left: 2px;
+	font-size: 14pt;
+	text-align: left;
+}
+
+#announcement p {
+	text-align: center;
+}
+
+
+.fakeBrownWall {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/fakeBrownWall.png);
+}
+
+.brownWall {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/brownWall.png);
+}
+
+.road {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/road.png);
+}
+
+.zj_up {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/zj_up.png);
+}
+
+.zj_down {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/zj_down.png);
+}
+
+.zj_left {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/zj_left.png);
+}
+
+.zj_right {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/zj_right.png);
+}
+
+.yellowDoor {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/yellowDoor.png);
+}
+
+.blueDoor {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueDoor.png);
+}
+
+.redDoor {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redDoor.png);
+}
+
+.redHP {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redHP.png);
+}
+
+.blueHP {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueHP.png);
+}
+
+.yellowKey {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/yellowKey.png);
+}
+
+.blueKey {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueKey.png);
+}
+
+.redKey {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redKey.png);
+}
+
+.redGem {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redGem.png);
+}
+
+.blueGem {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueGem.png);
+}
+
+.upStairs {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/upStairs.png);
+}
+
+.downStairs {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/downStairs.png);
+}
+
+.merchant {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/merchant.png);
+}
+
+.oldHead {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/oldHead.png);
+}
+
+.thief {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/thief.png);
+}
+
+.storeLeft {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/storeLeft.png);
+}
+
+.storeMiddle {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/storeMiddle.png);
+}
+
+.storeRight {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/storeRight.png);
+}
+
+.flyer {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/flyer.png);
+}
+
+.noteBook {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/noteBook.png);
+}
+
+.monsterDex {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/monsterDex.png);
+}
+
+.prisonDoor {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/prisonDoor.png);
+}
+
+.specialDoor {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/specialDoor.png);
+}
+
+.swordiron {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/swordiron.png);
+}
+
+.swordsilver {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/swordsilver.png);
+}
+
+.swordknight {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/swordknight.png);
+}
+
+.swordholy {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/swordholy.png);
+}
+
+.swordscared {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/swordscared.png);
+}
+
+.shieldiron {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shieldiron.png);
+}
+
+.shieldsilver {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shieldsilver.png);
+}
+
+.shieldknight {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shieldknight.png);
+}
+
+.shieldholy {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shieldholy.png);
+}
+
+.shieldscared {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shieldscared.png);
+}
+
+.snowFlake {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/snowFlake.png);
+}
+
+.bomb {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/bomb.png);
+}
+
+.earthquakeScript {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/earthquakeScript.png);
+}
+
+.magma {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/magma.png);
+}
+
+.princess {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/princess.png);
+}
+
+.floorUP {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/floorUP.png);
+}
+
+.floorDown {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/floorDown.png);
+}
+
+.masterYellowKey {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/masterYellowKey.png);
+}
+
+.pickaxe {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/pickaxe.png);
+}
+
+.holyWater {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/holyWater.png);
+}
+
+.cross {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/cross.png);
+}
+
+.dragonSlayer {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/dragonSlayer.png);
+}
+
+
+
+.greenSlime {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/greenSlime.png);
+}
+
+.teleporter {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/teleporter.png);
+}
+
+.redSlime {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redSlime.png);
+}
+
+.blueMage {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueMage.png);
+}
+
+.smallBat {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/smallBat.png);
+}
+
+.skeleton {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/skeleton.png);
+}
+
+.skeletonWarrior {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/skeletonWarrior.png);
+}
+
+.yellowGuard {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/yellowGuard.png);
+}
+
+.boss1 {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/boss1.png);
+}
+
+.blueGuard {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueGuard.png);
+}
+
+.orc {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/orc.png);
+}
+
+.orcWarrior {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/orcWarrior.png);
+}
+
+.blackSlime {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blackSlime.png);
+}
+
+.redMage {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redMage.png);
+}
+
+.bigBat {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/bigBat.png);
+}
+
+.stone {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/stone.png);
+}
+
+.shadowMan {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/shadowMan.png);
+}
+
+.darkMage {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/darkMage.png);
+}
+
+.ghostWarrior {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/ghostWarrior.png);
+}
+
+.warrior {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/warrior.png);
+}
+
+.redKnight {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redKnight.png);
+}
+
+.boss3 {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/boss3.png);
+}
+
+.doubleHander {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/doubleHander.png);
+}
+
+.vampireBat {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/vampireBat.png);
+}
+
+.kingSlime {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/kingSlime.png);
+}
+
+.redGuard {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redGuard.png);
+}
+
+.darkKnight {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/darkKnight.png);
+}
+
+.redWizard {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/redWizard.png);
+}
+
+.yellowWizard {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/yellowWizard.png);
+}
+
+.blueSergeant {
+	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/blueSergeant.png);
+}
