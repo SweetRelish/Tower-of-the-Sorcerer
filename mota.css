@@ -425,6 +425,18 @@ body {
 	text-align: center;
 }
 
+#messagebar {
+	height: 32px;
+	width: 416px;
+	background-color: grey;
+	position: absolute;
+	z-index: -2;
+	margin-top: 384px;
+	color: white;
+	font-size: 10pt;
+	line-height: 28px;
+}
+
 
 .fakeBrownWall {
 	background-image: url(http://www.andrew-yq.com/shift90/lab42/icon/fakeBrownWall.png);
