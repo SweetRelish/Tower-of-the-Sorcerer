@@ -9,10 +9,10 @@
 	
 	var FLOOR = 1;
 	var hp = 1000;
-	var atk = 100;
+	var atk = 10;
 	var def = 10;
 	var gold = 0;
-	var yellowKeyAmount = 100;
+	var yellowKeyAmount = 0;
 	var blueKeyAmount = 0;
 	var redKeyAmount = 0;
 	var timesOfPurchase = 0;
@@ -30,10 +30,10 @@
 	var hasMasterYellowKey = false;
 	var hasDragonSlayer = false;
 	
-	var lookUpMode = false;
-	var storeMode = false;
-	var oldHeadMode = false;
-	var merchantMode = false;
+	var lookUpMode = false;   //true means is looking up the monsterdex
+	var storeMode = false;    //true means is visiting a store
+	var oldHeadMode = false;  //true means is talking to an old head
+	var merchantMode = false; //true means is talkin to a merchant
 	//var isShopped = {""};
 	window.onload = function() {
 		setTower();
@@ -59,6 +59,11 @@
 			setStore(123, 12);
 			setStore(140, 32);
 			setStore(19, 46);
+			for(var i = 0; i < tower[57]["imgsToLoad"].length; i++) {
+				var img = new Image();
+				img.src = "http://www.andrew-yq.com/shift90/lab42/icon/" + tower[57]["imgsToLoad"][i] + ".png";
+				console.log(img.src);
+			}
 		}
 		
 		document.addEventListener("keydown", action);
@@ -73,7 +78,7 @@
 		}
 		var x = parseInt(zj.style.left);
 		var y = parseInt(zj.style.top);
-	
+	    // left, up, right, down
 		var move = [37,38,39,40];
 		var movePos = [y,x - TILE_SIZE,y - TILE_SIZE,x,y,x + TILE_SIZE,y + TILE_SIZE,x];
 		var orientation = ["zj_left","zj_up","zj_right","zj_down"];
@@ -105,11 +110,11 @@
 				}
 			} else if (movement == 78) {
 				storeMode = false;
-				document.getElementById("store").style.zIndex = -3;
+				document.getElementById("store").style.zIndex = "-3";
 			}							
 		} else if (oldHeadMode) {
 			oldHeadMode = false;
-			document.getElementById("oldhead").style.zIndex = -3;
+			document.getElementById("oldhead").style.zIndex = "-3";
 			var thisOldHead = document.querySelector("#f" + FLOOR + " .oldHead");
 			thisOldHead.parentNode.removeChild(thisOldHead);
 			if (FLOOR == 3) {
@@ -120,8 +125,22 @@
 		} else if (merchantMode) {
 			if (includes(movement, [89,78])) { // (y) or (n)
 				merchantMode = false;
-				document.getElementById("merchant").style.zIndex = -3;
-			}		
+				document.getElementById("merchant").style.zIndex = "-3";
+			}
+		} else if (lookUpMode) {
+			if (movement == move[0]) {
+				document.getElementById("monsterdex1").style.zIndex = "4";
+				document.getElementById("monsterdex2").style.zIndex = "-3";
+			} else if (movement == move[2]) {
+				if (document.getElementById("monsterdex2").innerHTML != "") {
+					document.getElementById("monsterdex1").style.zIndex = "-4";
+					document.getElementById("monsterdex2").style.zIndex = "3";
+				}
+			} else if (movement == 68) { //'d'
+			    lookUpMode = !lookUpMode;
+				document.getElementById("monsterdex1").style.zIndex = "-4";
+				document.getElementById("monsterdex2").style.zIndex = "-3";
+			}
 		} else {		
 			// fly up(70) or down(66)
 			if (movement == 70) {
@@ -140,52 +159,64 @@
 				checkFloorChange(thisTile);
 			} else if (movement == 68) {
 				if (hasMonsterDex) {
-					if (lookUpMode) {		
-						document.getElementById("monsterdex1").style.zIndex = -4;
-						document.getElementById("monsterdex2").style.zIndex = -3;
-					} else {
-						document.getElementById("monsterdex1").style.zIndex = 4;
-						document.getElementById("monsterdex2").style.zIndex = 3;
-					}						
+					document.getElementById("monsterdex1").style.zIndex = "4";
+					document.getElementById("monsterdex2").style.zIndex = "3";
+					lookUpMode = !lookUpMode;
 					showMonsterDex();
-				}
+				}						
 			} else {
 				// try to move
 				for (var i = 0; i < move.length; i++) {
 					if (movement == move[i]) {
-						if (lookUpMode) {
-							if (i == 0) {
-								document.getElementById("monsterdex1").style.zIndex = 4;
-								document.getElementById("monsterdex2").style.zIndex = -3;
-							} else if (i == 2) {
-								if (document.querySelector("#monsterdex2 .eachmonster")) {
-									document.getElementById("monsterdex1").style.zIndex = -4;
-									document.getElementById("monsterdex2").style.zIndex = 3;
+						zj.style.backgroundImage = getURL(orientation[i]);
+						if (moveable(movePos[2 * i], movePos[2 * i + 1])) {
+							// change messagebar visibility
+							invertMessageBar(-2, "");
+						/*	x = parseInt(zj.style.left);
+							y = parseInt(zj.style.top);
+							var top = parseInt(zj.style.top);
+							var left = parseInt(zj.style.left);
+							var destX = movePos[2 * i + 1];
+							var destY = movePos[2 * i];
+							var id = setInterval(function() {
+								event.preventDefault();
+								top += (destY - y) / 32;
+								left += (destX - x) / 32;
+								//console.log((destY - y) / 32);
+								//left
+								zj.style.top = top + "px";
+								zj.style.left = left + "px";
+								
+								if (parseInt(zj.style.top) == destY && parseInt(zj.style.left) == destX) {
+									clearTimeout(id);
 								}
-							}
-						} else {
-							zj.style.backgroundImage = getURL(orientation[i]);
-							if (moveable(movePos[2 * i], movePos[2 * i + 1])) {
-								zj.style.top = movePos[2 * i] + "px";
-								zj.style.left = movePos[2 * i + 1] + "px";
-								x = parseInt(zj.style.left);
-								y = parseInt(zj.style.top);
-								var thisTile = document.getElementById(getID(y, x, FLOOR));
-								if (thisTile) {
-									if (isMonster(thisTile)) {
-										if (!canWin(thisTile)) {
-											zj.style.top = movePos[0] + "px";
-											zj.style.left = movePos[7] + "px";
-										}							
-									} else if (isDoor(thisTile)) {
+							}, 5);    */
+							zj.style.top = movePos[2 * i] + "px";
+							zj.style.left = movePos[2 * i + 1] + "px";
+							x = parseInt(zj.style.left);
+							y = parseInt(zj.style.top);
+							var thisTile = document.getElementById(getID(y, x, FLOOR));
+							if (thisTile) {
+								if (isMonster(thisTile)) {
+									if (!canWin(thisTile)) {
 										zj.style.top = movePos[0] + "px";
-										zj.style.left = movePos[7] + "px";	
-									} else if (isNpc(thisTile)) {
-										zj.style.top = movePos[0] + "px";
-										zj.style.left = movePos[7] + "px";	
-									} else if (!isItem(thisTile)) {
-										checkFloorChange(thisTile);
-									}
+										zj.style.left = movePos[7] + "px";
+										invertMessageBar(2, "You can not beat it!");										
+									} else {
+										var bg = zj.style.backgroundImage;
+										zj.style.backgroundImage = getURL("fighting");
+										setTimeout(function() {
+											zj.style.backgroundImage = bg;
+										}, 200);
+									}							
+								} else if (isDoor(thisTile)) {
+									zj.style.top = movePos[0] + "px";
+									zj.style.left = movePos[7] + "px";	
+								} else if (isNpc(thisTile)) {
+									zj.style.top = movePos[0] + "px";
+									zj.style.left = movePos[7] + "px";	
+								} else if (!isItem(thisTile)) {
+									checkFloorChange(thisTile);
 								}
 							}
 						}
@@ -195,12 +226,17 @@
 		}
 	}
 	
+	function invertMessageBar(index, content) {
+		var messagebar = document.getElementById("messagebar");
+		messagebar.style.zIndex = index;
+		messagebar.innerHTML = content;
+	}
+	
 	function enableBgm() {
 		document.getElementById("bgm").autoplay = "autoplay";
 		document.getElementById("bgm").muted = !this.firstChild.checked;
 	}
 	function showMonsterDex() {
-		lookUpMode = !lookUpMode;
 		var page1 = document.getElementById("monsterdex1");
 		var page2 = document.getElementById("monsterdex2");
 		
@@ -287,6 +323,7 @@
 		var m_atk = tower[51][bg].atk;
 		var m_def = tower[51][bg].def;
 		var m_gold = tower[51][bg].gold;
+		var m_name = tower[51][bg].name;
 		var dmg = Math.floor(m_hp / (atk - m_def)) * (m_atk - def);
 		
 		if (atk < m_def || dmg >= hp) {
@@ -298,10 +335,12 @@
 			document.getElementById("status_gold").innerHTML = gold;
 			thisTile.parentNode.removeChild(thisTile);
 			// a message showing what you defeated and what you got
-			
+			var message = "You defeated " + m_name + ", lost " + dmg + " hp, gain " + m_gold + " gold";
+			invertMessageBar(2, message);
 			return true;
 		}
 	}
+	
 	function monsterTrigger() {
 		
 	}
@@ -309,34 +348,151 @@
 	function isDoor(thisTile) {
 		var type = thisTile.classList[0];
 		if (includes("Door", type)) {
-			canOpen(type, thisTile);
-			return true;
+			if (type == "specialDoor") {
+				isGuardDead(type, thisTile);
+				return true;
+			} else {
+				canOpen(type, thisTile);
+				return true;
+			}
 		}
 		return false;
 	}
 	
+	function isGuardDead(type, thisTile) {
+		var y = parseInt(thisTile.style.top);
+		var x = parseInt(thisTile.style.left);
+		switch(FLOOR) {
+			case 8:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 11:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 15:
+				break;
+			case 17:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 30:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x - 2 * TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x - 3 * TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + 2 * TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + 3 * TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 32:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 35:
+				break;
+			case 38:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 45:
+				if (!document.getElementById(getID(y - TILE_SIZE, x + TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+			case 49:
+				if (!document.getElementById(getID(y + TILE_SIZE, x - TILE_SIZE, FLOOR)) &&
+					!document.getElementById(getID(y + TILE_SIZE, x + TILE_SIZE, FLOOR))) {
+					doorAnimation(thisTile, "", -1, type, 60);
+				}
+				break;
+		}
+	}
+	
 	function canOpen(type, thisTile) {
-		var thisType = type.substring(0, type.length - 4) + "keys_amount";
-		var amount = document.getElementById(thisType).innerHTML;
+		var color = type.substring(0, type.length - 4); //red, yellow, blue
+		var thisType = color + "keys_amount"; //id of keyAmountShowing div
+		var amountShowing = document.getElementById(thisType).innerHTML;
 		if (type == "yellowDoor") {
 			if (yellowKeyAmount > 0) {
-				yellowKeyAmount--;
-				document.getElementById(thisType).innerHTML = yellowKeyAmount;
-				thisTile.parentNode.removeChild(thisTile);
+				if (yellowKeyAmount == amountShowing) {
+					yellowKeyAmount--;
+				}
+				doorAnimation(thisTile, thisType, yellowKeyAmount, type, 50);	
 			}
 		} else if (type == "blueDoor") {
 			if (blueKeyAmount > 0) {
-				blueKeyAmount--;
+				if (blueKeyAmount == amountShowing) {
+					blueKeyAmount--;
+				}
+				doorAnimation(thisTile, thisType, blueKeyAmount, type, 50);
 				document.getElementById(thisType).innerHTML = blueKeyAmount;
-				thisTile.parentNode.removeChild(thisTile);
-			}
+			}		
 		} else if (type == "redDoor") {
 			if (redKeyAmount > 0) {
-				redKeyAmount--;
+				if (redKeyAmount == amountShowing) {
+					redKeyAmount--;
+				}
+				doorAnimation(thisTile, thisType, redKeyAmount, type, 50);
 				document.getElementById(thisType).innerHTML = redKeyAmount;
-				thisTile.parentNode.removeChild(thisTile);
-			}
+			}	
 		}		
+	}
+	
+/*	function doorAnimation(thisTile, thisType, colorKeyAmount, bg, interval) {
+		var amountShowing = document.getElementById(thisType).innerHTML;
+		if (colorKeyAmount > 0) {
+			if (colorKeyAmount == amountShowing) {
+				colorKeyAmount--;
+			}
+			setTimeout(function() {
+				thisTile.style.backgroundImage = getURL(bg + "_stage2");
+			}, interval);
+			setTimeout(function() {
+				thisTile.style.backgroundImage = getURL(bg + "_stage3");
+			}, interval * 2);
+			setTimeout(function() {
+				thisTile.style.backgroundImage = getURL(bg + "_stage4");
+			}, interval * 3);
+			setTimeout(function() {
+				thisTile.parentNode.removeChild(thisTile);
+				document.getElementById(thisType).innerHTML = colorKeyAmount;
+				return colorKeyAmount;
+			}, interval * 4);
+			thisTile.parentNode.removeChild(thisTile);
+		}
+		return colorKeyAmount;
+	} */
+	
+	function doorAnimation(thisTile, thisType, colorKeyAmount, bg, interval) {
+		setTimeout(function() {
+			thisTile.style.backgroundImage = getURL(bg + "_stage2");
+		}, interval);
+		setTimeout(function() {
+			thisTile.style.backgroundImage = getURL(bg + "_stage3");
+		}, interval * 2);
+		setTimeout(function() {
+			thisTile.style.backgroundImage = getURL(bg + "_stage4");
+		}, interval * 3);
+		setTimeout(function() {
+			thisTile.parentNode.removeChild(thisTile);
+			if (document.getElementById(thisType)) {
+				document.getElementById(thisType).innerHTML = colorKeyAmount;
+			}		
+		}, interval * 4);
 	}
 	
 	function isItem(thisTile) {
@@ -355,45 +511,58 @@
 		var type = thisTile.classList[0];
 		
 		if (includes("Key", type) && type != "masterYellowKey") {
+			var message = "You got a ";
 			if (type == "yellowKey") {
 				yellowKeyAmount++;
-				document.getElementById("yellowkeys_amount").innerHTML = yellowKeyAmount;		
+				document.getElementById("yellowkeys_amount").innerHTML = yellowKeyAmount;
+				invertMessageBar(2, message + "yellow key");
 			} else if (type == "blueKey") {
 				blueKeyAmount++;
 				document.getElementById("bluekeys_amount").innerHTML = blueKeyAmount;
+				invertMessageBar(2, message + "blue key");
 			} else if (type == "redKey") {
 				redKeyAmount++;
 				document.getElementById("redkeys_amount").innerHTML = redKeyAmount;
+				invertMessageBar(2, message + "red key");
 			}
 			thisTile.parentNode.removeChild(thisTile);
 			return true;
 		} else if (includes("Gem", type)) {
+			var message = "You gained +";
 			if (type == "redGem") {
 				atk += Math.ceil(FLOOR / 10);
 				document.getElementById("status_attack").innerHTML = atk;
+				invertMessageBar(2, message + Math.ceil(FLOOR / 10) + "attack stats");
 			} else if (type == "blueGem") {
 				def += Math.ceil(FLOOR / 10);
 				document.getElementById("status_defense").innerHTML = def;
+				invertMessageBar(2, message + Math.ceil(FLOOR / 10) + "defense stats");
 			}
 			thisTile.parentNode.removeChild(thisTile);
 			return true;
 		} else if (includes("HP", type)) {
+			var message = "You gained ";
 			if (type == "redHP") {
 				hp += Math.ceil(FLOOR / 10) * 50;
 				document.getElementById("status_hp").innerHTML = hp;
+				invertMessageBar(2, message + Math.ceil(FLOOR / 10) * 50 + " hp");
 			} else if (type == "blueHP") {
 				hp += Math.ceil(FLOOR / 10) * 200;
 				document.getElementById("status_hp").innerHTML = hp;
+				invertMessageBar(2, message + Math.ceil(FLOOR / 10) * 200 + " hp");
 			}
 			thisTile.parentNode.removeChild(thisTile);
 			return true;
 		} else if (includes("sword", type)) {
+			var message = "You gained +";
 			if (type == "sword5") {
 				atk += 100;
 				document.getElementById("status_attack").innerHTML = atk;
+				invertMessageBar(2, message + 100 + " attack stats");
 			} else {
 				atk += Math.ceil(FLOOR / 10) * 10;
 				document.getElementById("status_attack").innerHTML = atk;
+				invertMessageBar(2, message + Math.ceil(FLOOR / 10) * 10 + " attack stats");
 			}
 					
 			var weapon = document.getElementById("weapon_img");
@@ -403,12 +572,15 @@
 			thisTile.parentNode.removeChild(thisTile);
 			return true;		
 		} else if (includes("shield", type)) {
+			var message = "You gained +";
 			if (type == "shieldscared") {
 				def += 100;
-				document.getElementById("status_defense").innerHTML = def;			
+				document.getElementById("status_defense").innerHTML = def;
+				invertMessageBar(2, message + 100 + " defense stats");				
 			} else {
 				def += Math.ceil(FLOOR / 10) * 10;
 				document.getElementById("status_defense").innerHTML = def;
+				invertMessageBar(2, Math.ceil(FLOOR / 10) * 10 + " defense stats");
 			}
 			
 			var shield = document.getElementById("shield_img");				
@@ -627,7 +799,7 @@
 				}
 				return false;	
 			} else {
-				var specialLandForm = ["magma","prisonDoor","water","specialDoor",
+				var specialLandForm = ["magma","prisonDoor","water",
 										"storeLeft","storeRight"];
 				for (var i = 0; i < specialLandForm.length; i++) {
 					if (tile.classList.contains(specialLandForm[i])) {
@@ -693,7 +865,7 @@
 				tile.classList.add("walls");
 			} else {
 				tile = create(y, x, "road", "border");
-				tile.innerHTML = i;
+				//tile.innerHTML = i;
 			}		
 		}
 	}
@@ -731,15 +903,15 @@
 		gameBoard.classList.add("zone");
 		document.getElementById("mainzone").appendChild(gameBoard);
 		if (f == 1) {
-			gameBoard.style.zIndex = 2;			
+			gameBoard.style.zIndex = 2;
 		} else if (f == "border") {
 			gameBoard.style.zIndex = 1;
 		} else {
 			gameBoard.style.zIndex = 0;
 		}
-		if (f == "50") {	
+		if (f == "50") {
 			gameBoard.style.height = 416 + "px";
-		}	
+		}
 	}
 	
 	function putElements(element, description, f) {
